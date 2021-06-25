@@ -224,7 +224,7 @@ const warnAboutExperimentalFeatures = function (webPreferences?: Electron.WebPre
 const warnAboutEnableBlinkFeatures = function (webPreferences?: Electron.WebPreferences) {
   if (!webPreferences ||
     !Object.prototype.hasOwnProperty.call(webPreferences, 'enableBlinkFeatures') ||
-    (webPreferences.enableBlinkFeatures && webPreferences.enableBlinkFeatures.length === 0)) {
+    (webPreferences.enableBlinkFeatures != null && webPreferences.enableBlinkFeatures.length === 0)) {
     return;
   }
 
@@ -270,7 +270,7 @@ const warnAboutAllowedPopups = function () {
 
 const warnAboutRemoteModuleWithRemoteContent = function (webPreferences?: Electron.WebPreferences) {
   if (!webPreferences || isLocalhost()) return;
-  const remoteModuleEnabled = webPreferences.enableRemoteModule != null ? !!webPreferences.enableRemoteModule : true;
+  const remoteModuleEnabled = webPreferences.enableRemoteModule != null ? !!webPreferences.enableRemoteModule : false;
   if (!remoteModuleEnabled) return;
 
   if (getIsRemoteProtocol()) {

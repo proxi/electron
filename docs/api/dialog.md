@@ -11,14 +11,6 @@ const { dialog } = require('electron')
 console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 ```
 
-The Dialog is opened from Electron's main thread. If you want to use the dialog
-object from a renderer process, remember to access it using the remote:
-
-```javascript
-const { dialog } = require('electron').remote
-console.log(dialog)
-```
-
 ## Methods
 
 The `dialog` module has the following methods:
@@ -162,7 +154,7 @@ dialog.showOpenDialog(mainWindow, {
 
 * `browserWindow` [BrowserWindow](browser-window.md) (optional)
 * `options` Object
-  * `title` String (optional)
+  * `title` String (optional) - The dialog title. Cannot be displayed on some _Linux_ desktop environments.
   * `defaultPath` String (optional) - Absolute directory path, absolute file
     path, or file name to use by default.
   * `buttonLabel` String (optional) - Custom label for the confirmation button, when
@@ -193,7 +185,7 @@ The `filters` specifies an array of file types that can be displayed, see
 
 * `browserWindow` [BrowserWindow](browser-window.md) (optional)
 * `options` Object
-  * `title` String (optional)
+  * `title` String (optional) - The dialog title. Cannot be displayed on some _Linux_ desktop environments.
   * `defaultPath` String (optional) - Absolute directory path, absolute file
     path, or file name to use by default.
   * `buttonLabel` String (optional) - Custom label for the confirmation button, when

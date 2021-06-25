@@ -390,7 +390,7 @@ which contains more information about why the render process disappeared. It
 isn't always because it crashed.  The `killed` boolean can be replaced by
 checking `reason === 'killed'` when you switch to that event.
 
-#### Event: 'render-process-gone'
+### Event: 'render-process-gone'
 
 Returns:
 
@@ -409,7 +409,7 @@ Returns:
 Emitted when the renderer process unexpectedly disappears.  This is normally
 because it was crashed or killed.
 
-#### Event: 'child-process-gone'
+### Event: 'child-process-gone'
 
 Returns:
 
@@ -502,7 +502,7 @@ Returns:
 Emitted when `desktopCapturer.getSources()` is called in the renderer process of `webContents`.
 Calling `event.preventDefault()` will make it return empty sources.
 
-### Event: 'remote-require'
+### Event: 'remote-require' _Deprecated_
 
 Returns:
 
@@ -514,7 +514,7 @@ Emitted when `remote.require()` is called in the renderer process of `webContent
 Calling `event.preventDefault()` will prevent the module from being returned.
 Custom value can be returned by setting `event.returnValue`.
 
-### Event: 'remote-get-global'
+### Event: 'remote-get-global' _Deprecated_
 
 Returns:
 
@@ -526,7 +526,7 @@ Emitted when `remote.getGlobal()` is called in the renderer process of `webConte
 Calling `event.preventDefault()` will prevent the global from being returned.
 Custom value can be returned by setting `event.returnValue`.
 
-### Event: 'remote-get-builtin'
+### Event: 'remote-get-builtin' _Deprecated_
 
 Returns:
 
@@ -538,7 +538,7 @@ Emitted when `remote.getBuiltin()` is called in the renderer process of `webCont
 Calling `event.preventDefault()` will prevent the module from being returned.
 Custom value can be returned by setting `event.returnValue`.
 
-### Event: 'remote-get-current-window'
+### Event: 'remote-get-current-window' _Deprecated_
 
 Returns:
 
@@ -549,7 +549,7 @@ Emitted when `remote.getCurrentWindow()` is called in the renderer process of `w
 Calling `event.preventDefault()` will prevent the object from being returned.
 Custom value can be returned by setting `event.returnValue`.
 
-### Event: 'remote-get-current-web-contents'
+### Event: 'remote-get-current-web-contents' _Deprecated_
 
 Returns:
 
@@ -749,7 +749,8 @@ Overrides the current application's name.
 
 ### `app.getLocale()`
 
-Returns `String` - The current application locale. Possible return values are documented [here](locales.md).
+Returns `String` - The current application locale, fetched using Chromium's `l10n_util` library.
+Possible return values are documented [here](https://source.chromium.org/chromium/chromium/src/+/master:ui/base/l10n/l10n_util.cc).
 
 To set the locale, you'll want to use a command line switch at app startup, which may be found [here](https://github.com/electron/electron/blob/master/docs/api/command-line-switches.md).
 
@@ -923,6 +924,10 @@ the next successful call to `app.setJumpList(categories)`. Any attempt to
 re-add a removed item to a custom category earlier than that will result in the
 entire custom category being omitted from the Jump List. The list of removed
 items can be obtained using `app.getJumpListSettings()`.
+
+**Note:** The maximum length of a Jump List item's `description` property is
+260 characters. Beyond this limit, the item will not be added to the Jump
+List, nor will it be displayed.
 
 Here's a very simple example of creating a custom Jump List:
 

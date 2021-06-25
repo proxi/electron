@@ -165,6 +165,7 @@ class NativeWindow : public base::SupportsUserData,
   virtual void SetParentWindow(NativeWindow* parent);
   virtual void AddBrowserView(NativeBrowserView* browser_view) = 0;
   virtual void RemoveBrowserView(NativeBrowserView* browser_view) = 0;
+  virtual void SetTopBrowserView(NativeBrowserView* browser_view) = 0;
   virtual content::DesktopMediaID GetDesktopMediaID() const = 0;
   virtual gfx::NativeView GetNativeView() const = 0;
   virtual gfx::NativeWindow GetNativeWindow() const = 0;
@@ -200,6 +201,7 @@ class NativeWindow : public base::SupportsUserData,
   virtual void SetTrafficLightPosition(const gfx::Point& position) = 0;
   virtual gfx::Point GetTrafficLightPosition() const = 0;
   virtual void RedrawTrafficLights() = 0;
+  virtual void UpdateFrame() = 0;
 #endif
 
   // Touchbar API

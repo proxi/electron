@@ -277,14 +277,6 @@ int ElectronBrowserMainParts::GetExitCode() {
   return exit_code_ != nullptr ? *exit_code_ : 0;
 }
 
-void ElectronBrowserMainParts::RegisterDestructionCallback(
-    base::OnceClosure callback) {
-  // The destructors should be called in reversed order, so dependencies between
-  // JavaScript objects can be correctly resolved.
-  // For example WebContentsView => WebContents => Session.
-  destructors_.insert(destructors_.begin(), std::move(callback));
-}
-
 int ElectronBrowserMainParts::PreEarlyInitialization() {
   field_trial_list_ = std::make_unique<base::FieldTrialList>(nullptr);
 #if defined(USE_X11)
@@ -341,6 +333,9 @@ void ElectronBrowserMainParts::PostEarlyInitialization() {
   // command-line changes.
   base::FeatureList::ClearInstanceForTesting();
   InitializeFeatureList();
+
+  // Initialize field trials.
+  InitializeFieldTrials();
 
   // Initialize after user script environment creation.
   fake_browser_process_->PostEarlyInitialization();
@@ -575,18 +570,6 @@ void ElectronBrowserMainParts::PostMainMessageLoopRun() {
     if (download_manager) {
       download_manager->Shutdown();
     }
-  }
-
-  // Make sure destruction callbacks are called before message loop is
-  // destroyed, otherwise some objects that need to be deleted on IO thread
-  // won't be freed.
-  // We don't use ranged for loop because iterators are getting invalided when
-  // the callback runs.
-  for (auto iter = destructors_.begin(); iter != destructors_.end();) {
-    base::OnceClosure callback = std::move(*iter);
-    if (!callback.is_null())
-      std::move(callback).Run();
-    ++iter;
   }
 
   // Destroy node platform after all destructors_ are executed, as they may
