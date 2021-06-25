@@ -170,6 +170,8 @@ filenames = {
     "shell/browser/ui/cocoa/electron_inspectable_web_contents_view.mm",
     "shell/browser/ui/cocoa/electron_menu_controller.h",
     "shell/browser/ui/cocoa/electron_menu_controller.mm",
+    "shell/browser/ui/cocoa/electron_ns_panel.h",
+    "shell/browser/ui/cocoa/electron_ns_panel.mm",
     "shell/browser/ui/cocoa/electron_ns_window.h",
     "shell/browser/ui/cocoa/electron_ns_window.mm",
     "shell/browser/ui/cocoa/electron_ns_window_delegate.h",

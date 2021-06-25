@@ -14,6 +14,7 @@ class NativeWindowMac;
 class ElectronNativeWidgetMac : public views::NativeWidgetMac {
  public:
   ElectronNativeWidgetMac(NativeWindowMac* shell,
+                          std::string window_type,
                           NSUInteger style_mask,
                           views::internal::NativeWidgetDelegate* delegate);
   ~ElectronNativeWidgetMac() override;
@@ -25,6 +26,7 @@ class ElectronNativeWidgetMac : public views::NativeWidgetMac {
 
  private:
   NativeWindowMac* shell_;
+  std::string window_type_;
   NSUInteger style_mask_;
 
   DISALLOW_COPY_AND_ASSIGN(ElectronNativeWidgetMac);
